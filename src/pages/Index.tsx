@@ -5,10 +5,11 @@ import { MovieCard } from '@/components/MovieCard';
 import { SeatSelection } from '@/components/SeatSelection';
 import { PaymentForm } from '@/components/PaymentForm';
 import { TicketDisplay } from '@/components/TicketDisplay';
+import { LoginPage } from '@/components/LoginPage';
 import { movies, priceRanges, Movie } from '@/lib/movieData';
 import { useToast } from '@/hooks/use-toast';
 
-type AppState = 'movies' | 'seats' | 'payment' | 'ticket';
+type AppState = 'movies' | 'seats' | 'payment' | 'ticket' | 'login';
 
 interface BookingData {
   movie: Movie;
@@ -51,14 +52,18 @@ const Index = () => {
     });
   }, [searchTerm, selectedGenre, selectedTheater, selectedPriceRange]);
 
-  const handleLogin = () => {
-    // TODO: Implement Firebase authentication
-    setIsLoggedIn(true);
-    setUserEmail('user@gmail.com');
-    toast({
-      title: "Login Successful",
-      description: "Welcome! You can now book movie tickets.",
-    });
+  const handleLogin = (email?: string) => {
+    if (email) {
+      setIsLoggedIn(true);
+      setUserEmail(email);
+      setAppState('movies');
+      toast({
+        title: "Login Successful",
+        description: "Welcome! You can now book movie tickets.",
+      });
+    } else {
+      setAppState('login');
+    }
   };
 
   const handleLogout = () => {
@@ -124,20 +129,31 @@ const Index = () => {
     setBookingData(null);
   };
 
+  const handleBackFromLogin = () => {
+    setAppState('movies');
+  };
+
   const handleBackToSeats = () => {
     setAppState('seats');
   };
 
   return (
-    <div className="min-h-screen bg-gradient-cinema">
-      <Header 
-        isLoggedIn={isLoggedIn}
-        userEmail={userEmail}
-        onLogin={handleLogin}
-        onLogout={handleLogout}
-      />
-      
-      <main className="container mx-auto px-4 py-8">
+    <>
+      {appState === 'login' ? (
+        <LoginPage 
+          onLogin={handleLogin}
+          onBack={handleBackFromLogin}
+        />
+      ) : (
+        <div className="min-h-screen bg-gradient-cinema">
+          <Header 
+            isLoggedIn={isLoggedIn}
+            userEmail={userEmail}
+            onLogin={handleLogin}
+            onLogout={handleLogout}
+          />
+          
+          <main className="container mx-auto px-4 py-8">
         {appState === 'movies' && (
           <div className="space-y-8">
             <div className="text-center space-y-4">
@@ -208,8 +224,10 @@ const Index = () => {
             onShowPopularMovies={handleShowPopularMovies}
           />
         )}
-      </main>
-    </div>
+          </main>
+        </div>
+      )}
+    </>
   );
 };
 
