@@ -22,15 +22,117 @@ export const PaymentForm = ({ movie, selectedSeats, totalPrice, onBack, onPaymen
     expiryDate: '',
     cvv: '',
     cardholderName: '',
-    upiId: ''
+    upiId: '',
+    selectedBank: ''
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // Validation functions
+  const validateCardNumber = (cardNumber: string): string => {
+    const cleaned = cardNumber.replace(/\s+/g, '');
+    if (!cleaned) return 'Card number is required';
+    if (cleaned.length < 13 || cleaned.length > 19) return 'Card number must be 13-19 digits';
+    if (!/^\d+$/.test(cleaned)) return 'Card number must contain only digits';
+    return '';
+  };
+
+  const validateCardholderName = (name: string): string => {
+    if (!name.trim()) return 'Cardholder name is required';
+    if (name.length < 2) return 'Name must be at least 2 characters';
+    if (!/^[a-zA-Z\s]+$/.test(name)) return 'Name must contain only letters and spaces';
+    return '';
+  };
+
+  const validateExpiryDate = (expiry: string): string => {
+    if (!expiry) return 'Expiry date is required';
+    if (!/^\d{2}\/\d{2}$/.test(expiry)) return 'Format must be MM/YY';
+    
+    const [month, year] = expiry.split('/').map(num => parseInt(num));
+    if (month < 1 || month > 12) return 'Invalid month';
+    
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear() % 100;
+    const currentMonth = currentDate.getMonth() + 1;
+    
+    if (year < currentYear || (year === currentYear && month < currentMonth)) {
+      return 'Card has expired';
+    }
+    
+    return '';
+  };
+
+  const validateCVV = (cvv: string): string => {
+    if (!cvv) return 'CVV is required';
+    if (!/^\d{3,4}$/.test(cvv)) return 'CVV must be 3-4 digits';
+    return '';
+  };
+
+  const validateUPI = (upiId: string): string => {
+    if (!upiId) return 'UPI ID is required';
+    if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+$/.test(upiId)) return 'Invalid UPI ID format';
+    return '';
+  };
+
+  const validateBank = (bank: string): string => {
+    if (!bank) return 'Please select a bank';
+    return '';
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (paymentMethod === 'card') {
+      newErrors.cardNumber = validateCardNumber(formData.cardNumber);
+      newErrors.cardholderName = validateCardholderName(formData.cardholderName);
+      newErrors.expiryDate = validateExpiryDate(formData.expiryDate);
+      newErrors.cvv = validateCVV(formData.cvv);
+    } else if (paymentMethod === 'upi') {
+      newErrors.upiId = validateUPI(formData.upiId);
+    } else if (paymentMethod === 'netbanking') {
+      newErrors.selectedBank = validateBank(formData.selectedBank);
+    }
+
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(error => error !== '');
+  };
+
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    let formattedValue = value;
+    
+    // Format card number with spaces
+    if (field === 'cardNumber') {
+      formattedValue = value.replace(/\s+/g, '').replace(/(.{4})/g, '$1 ').trim();
+      if (formattedValue.length > 23) return; // Max length with spaces
+    }
+    
+    // Format expiry date
+    if (field === 'expiryDate') {
+      formattedValue = value.replace(/\D/g, '');
+      if (formattedValue.length >= 2) {
+        formattedValue = formattedValue.substring(0, 2) + '/' + formattedValue.substring(2, 4);
+      }
+      if (formattedValue.length > 5) return;
+    }
+    
+    // Limit CVV to 4 digits
+    if (field === 'cvv') {
+      formattedValue = value.replace(/\D/g, '').substring(0, 4);
+    }
+
+    setFormData(prev => ({ ...prev, [field]: formattedValue }));
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
   };
 
   const handlePayment = async () => {
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsProcessing(true);
     
     // Simulate payment processing
@@ -152,8 +254,9 @@ export const PaymentForm = ({ movie, selectedSeats, totalPrice, onBack, onPaymen
                     placeholder="1234 5678 9012 3456"
                     value={formData.cardNumber}
                     onChange={(e) => handleInputChange('cardNumber', e.target.value)}
-                    className="bg-secondary border-border focus:border-cinema-gold"
+                    className={`bg-secondary border-border focus:border-cinema-gold ${errors.cardNumber ? 'border-destructive' : ''}`}
                   />
+                  {errors.cardNumber && <p className="text-sm text-destructive mt-1">{errors.cardNumber}</p>}
                 </div>
                 <div>
                   <Label htmlFor="cardholderName" className="text-foreground">Cardholder Name</Label>
@@ -162,8 +265,9 @@ export const PaymentForm = ({ movie, selectedSeats, totalPrice, onBack, onPaymen
                     placeholder="John Doe"
                     value={formData.cardholderName}
                     onChange={(e) => handleInputChange('cardholderName', e.target.value)}
-                    className="bg-secondary border-border focus:border-cinema-gold"
+                    className={`bg-secondary border-border focus:border-cinema-gold ${errors.cardholderName ? 'border-destructive' : ''}`}
                   />
+                  {errors.cardholderName && <p className="text-sm text-destructive mt-1">{errors.cardholderName}</p>}
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -173,8 +277,9 @@ export const PaymentForm = ({ movie, selectedSeats, totalPrice, onBack, onPaymen
                       placeholder="MM/YY"
                       value={formData.expiryDate}
                       onChange={(e) => handleInputChange('expiryDate', e.target.value)}
-                      className="bg-secondary border-border focus:border-cinema-gold"
+                      className={`bg-secondary border-border focus:border-cinema-gold ${errors.expiryDate ? 'border-destructive' : ''}`}
                     />
+                    {errors.expiryDate && <p className="text-sm text-destructive mt-1">{errors.expiryDate}</p>}
                   </div>
                   <div>
                     <Label htmlFor="cvv" className="text-foreground">CVV</Label>
@@ -183,8 +288,9 @@ export const PaymentForm = ({ movie, selectedSeats, totalPrice, onBack, onPaymen
                       placeholder="123"
                       value={formData.cvv}
                       onChange={(e) => handleInputChange('cvv', e.target.value)}
-                      className="bg-secondary border-border focus:border-cinema-gold"
+                      className={`bg-secondary border-border focus:border-cinema-gold ${errors.cvv ? 'border-destructive' : ''}`}
                     />
+                    {errors.cvv && <p className="text-sm text-destructive mt-1">{errors.cvv}</p>}
                   </div>
                 </div>
               </div>
@@ -199,8 +305,9 @@ export const PaymentForm = ({ movie, selectedSeats, totalPrice, onBack, onPaymen
                   placeholder="yourname@paytm"
                   value={formData.upiId}
                   onChange={(e) => handleInputChange('upiId', e.target.value)}
-                  className="bg-secondary border-border focus:border-cinema-gold"
+                  className={`bg-secondary border-border focus:border-cinema-gold ${errors.upiId ? 'border-destructive' : ''}`}
                 />
+                {errors.upiId && <p className="text-sm text-destructive mt-1">{errors.upiId}</p>}
               </div>
             )}
 
@@ -208,8 +315,8 @@ export const PaymentForm = ({ movie, selectedSeats, totalPrice, onBack, onPaymen
             {paymentMethod === 'netbanking' && (
               <div>
                 <Label className="text-foreground">Select Bank</Label>
-                <Select>
-                  <SelectTrigger className="bg-secondary border-border focus:border-cinema-gold">
+                <Select value={formData.selectedBank} onValueChange={(value) => handleInputChange('selectedBank', value)}>
+                  <SelectTrigger className={`bg-secondary border-border focus:border-cinema-gold ${errors.selectedBank ? 'border-destructive' : ''}`}>
                     <SelectValue placeholder="Choose your bank" />
                   </SelectTrigger>
                   <SelectContent>
@@ -220,6 +327,7 @@ export const PaymentForm = ({ movie, selectedSeats, totalPrice, onBack, onPaymen
                     <SelectItem value="kotak">Kotak Mahindra Bank</SelectItem>
                   </SelectContent>
                 </Select>
+                {errors.selectedBank && <p className="text-sm text-destructive mt-1">{errors.selectedBank}</p>}
               </div>
             )}
 
