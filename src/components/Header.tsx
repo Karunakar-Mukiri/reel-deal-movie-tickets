@@ -36,7 +36,7 @@ export const Header = ({ isLoggedIn, userEmail, onLogin, onLogout }: HeaderProps
             </div>
           ) : (
             <Button 
-              onClick={onLogin}
+              onClick={() => onLogin()}
               className="bg-gradient-gold hover:shadow-gold text-cinema-dark font-semibold"
             >
               <LogIn className="w-4 h-4 mr-2" />
