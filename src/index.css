@@ -8,35 +8,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Cinematic dark theme */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 47 96% 53%;
+    --primary-foreground: 240 10% 3.9%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 64%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 47 96% 53%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Cinema-specific colors */
+    --cinema-gold: 47 96% 53%;
+    --cinema-purple: 260 100% 80%;
+    --cinema-blue: 220 100% 70%;
+    --cinema-dark: 240 10% 3.9%;
+    --cinema-darker: 240 20% 1%;
+    --seat-available: 240 5% 64%;
+    --seat-selected: 47 96% 53%;
+    --seat-occupied: 0 84% 60%;
+
+    /* Gradients */
+    --gradient-cinema: linear-gradient(135deg, hsl(240 10% 3.9%), hsl(240 20% 1%));
+    --gradient-gold: linear-gradient(135deg, hsl(47 96% 53%), hsl(45 90% 60%));
+    --gradient-purple: linear-gradient(135deg, hsl(260 100% 80%), hsl(280 100% 70%));
+
+    /* Shadows */
+    --shadow-cinema: 0 25px 50px -12px hsl(240 20% 1% / 0.8);
+    --shadow-gold: 0 10px 30px -10px hsl(47 96% 53% / 0.3);
 
     --sidebar-background: 0 0% 98%;
 

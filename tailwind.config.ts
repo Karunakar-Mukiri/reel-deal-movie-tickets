@@ -61,7 +61,28 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				cinema: {
+					gold: 'hsl(var(--cinema-gold))',
+					purple: 'hsl(var(--cinema-purple))',
+					blue: 'hsl(var(--cinema-blue))',
+					dark: 'hsl(var(--cinema-dark))',
+					darker: 'hsl(var(--cinema-darker))'
+				},
+				seat: {
+					available: 'hsl(var(--seat-available))',
+					selected: 'hsl(var(--seat-selected))',
+					occupied: 'hsl(var(--seat-occupied))'
 				}
+			},
+			backgroundImage: {
+				'gradient-cinema': 'var(--gradient-cinema)',
+				'gradient-gold': 'var(--gradient-gold)',
+				'gradient-purple': 'var(--gradient-purple)'
+			},
+			boxShadow: {
+				'cinema': 'var(--shadow-cinema)',
+				'gold': 'var(--shadow-gold)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
