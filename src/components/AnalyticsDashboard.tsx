@@ -55,11 +55,11 @@ const theaterPerformanceData = [
 ];
 
 const genreDistribution = [
-  { name: 'Action', value: 35, color: '#hsl(45, 85%, 65%)' },
-  { name: 'Drama', value: 25, color: '#hsl(355, 75%, 45%)' },
-  { name: 'Comedy', value: 20, color: '#hsl(30, 65%, 55%)' },
-  { name: 'Sci-Fi', value: 15, color: '#hsl(240, 35%, 65%)' },
-  { name: 'Horror', value: 5, color: '#hsl(0, 84%, 60%)' },
+  { name: 'Action', value: 35, color: 'hsl(45, 85%, 65%)' },
+  { name: 'Drama', value: 25, color: 'hsl(355, 75%, 45%)' },
+  { name: 'Comedy', value: 20, color: 'hsl(30, 65%, 55%)' },
+  { name: 'Sci-Fi', value: 15, color: 'hsl(220, 70%, 60%)' },
+  { name: 'Horror', value: 5, color: 'hsl(0, 84%, 60%)' },
 ];
 
 export const AnalyticsDashboard = ({ data }: AnalyticsDashboardProps) => {

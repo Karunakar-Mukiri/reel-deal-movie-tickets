@@ -6,11 +6,12 @@ import { SeatSelection } from '@/components/SeatSelection';
 import { PaymentForm } from '@/components/PaymentForm';
 import { TicketDisplay } from '@/components/TicketDisplay';
 import { LoginPage } from '@/components/LoginPage';
+import { AdminLogin } from '@/components/AdminLogin';
 import { AdminDashboard } from '@/components/AdminDashboard';
 import { movies, priceRanges, Movie } from '@/lib/movieData';
 import { useToast } from '@/hooks/use-toast';
 
-type AppState = 'movies' | 'seats' | 'payment' | 'ticket' | 'login' | 'admin';
+type AppState = 'movies' | 'seats' | 'payment' | 'ticket' | 'login' | 'admin-login' | 'admin';
 
 interface BookingData {
   movie: Movie;
@@ -135,6 +136,10 @@ const Index = () => {
   };
 
   const handleAdminAccess = () => {
+    setAppState('admin-login');
+  };
+
+  const handleAdminLogin = () => {
     setAppState('admin');
   };
 
@@ -153,6 +158,8 @@ const Index = () => {
           onLogin={handleLogin}
           onBack={handleBackFromLogin}
         />
+      ) : appState === 'admin-login' ? (
+        <AdminLogin onAdminLogin={handleAdminLogin} onBack={handleBackFromAdmin} />
       ) : appState === 'admin' ? (
         <AdminDashboard onBack={handleBackFromAdmin} />
       ) : (
