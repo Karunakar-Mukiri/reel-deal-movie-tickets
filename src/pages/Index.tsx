@@ -6,10 +6,11 @@ import { SeatSelection } from '@/components/SeatSelection';
 import { PaymentForm } from '@/components/PaymentForm';
 import { TicketDisplay } from '@/components/TicketDisplay';
 import { LoginPage } from '@/components/LoginPage';
+import { AdminDashboard } from '@/components/AdminDashboard';
 import { movies, priceRanges, Movie } from '@/lib/movieData';
 import { useToast } from '@/hooks/use-toast';
 
-type AppState = 'movies' | 'seats' | 'payment' | 'ticket' | 'login';
+type AppState = 'movies' | 'seats' | 'payment' | 'ticket' | 'login' | 'admin';
 
 interface BookingData {
   movie: Movie;
@@ -133,6 +134,14 @@ const Index = () => {
     setAppState('movies');
   };
 
+  const handleAdminAccess = () => {
+    setAppState('admin');
+  };
+
+  const handleBackFromAdmin = () => {
+    setAppState('movies');
+  };
+
   const handleBackToSeats = () => {
     setAppState('seats');
   };
@@ -144,13 +153,16 @@ const Index = () => {
           onLogin={handleLogin}
           onBack={handleBackFromLogin}
         />
+      ) : appState === 'admin' ? (
+        <AdminDashboard onBack={handleBackFromAdmin} />
       ) : (
-        <div className="min-h-screen bg-gradient-cinema">
+        <div className="min-h-screen bg-gradient-luxury">
           <Header 
             isLoggedIn={isLoggedIn}
             userEmail={userEmail}
             onLogin={handleLogin}
             onLogout={handleLogout}
+            onAdminAccess={handleAdminAccess}
           />
           
           <main className="container mx-auto px-4 py-8">
@@ -189,6 +201,8 @@ const Index = () => {
                     key={movie.id}
                     movie={movie}
                     onSelectMovie={handleSelectMovie}
+                    userEmail={userEmail}
+                    isLoggedIn={isLoggedIn}
                   />
                 ))}
               </div>

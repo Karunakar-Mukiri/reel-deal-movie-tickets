@@ -62,6 +62,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				// Luxury theme colors
+				"luxury-gold": "hsl(var(--luxury-gold))",
+				"luxury-gold-dark": "hsl(var(--luxury-gold-dark))",
+				"luxury-burgundy": "hsl(var(--luxury-burgundy))",
+				"luxury-burgundy-dark": "hsl(var(--luxury-burgundy-dark))",
+				"luxury-cream": "hsl(var(--luxury-cream))",
+				"luxury-charcoal": "hsl(var(--luxury-charcoal))",
+				"luxury-charcoal-light": "hsl(var(--luxury-charcoal-light))",
+				"luxury-bronze": "hsl(var(--luxury-bronze))",
+				"luxury-pearl": "hsl(var(--luxury-pearl))",
 				cinema: {
 					gold: 'hsl(var(--cinema-gold))',
 					purple: 'hsl(var(--cinema-purple))',
@@ -78,11 +88,16 @@ export default {
 			backgroundImage: {
 				'gradient-cinema': 'var(--gradient-cinema)',
 				'gradient-gold': 'var(--gradient-gold)',
-				'gradient-purple': 'var(--gradient-purple)'
+				'gradient-purple': 'var(--gradient-purple)',
+				"gradient-luxury": "var(--gradient-luxury)",
+				"gradient-burgundy": "var(--gradient-burgundy)",
+				"gradient-elegant": "var(--gradient-elegant)",
 			},
 			boxShadow: {
 				'cinema': 'var(--shadow-cinema)',
-				'gold': 'var(--shadow-gold)'
+				'gold': 'var(--shadow-gold)',
+				"luxury": "var(--shadow-luxury)",
+				"burgundy": "var(--shadow-burgundy)",
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

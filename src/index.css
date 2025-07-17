@@ -8,55 +8,62 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Cinematic dark theme */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Luxury Classic Theme */
+    --background: 15 15% 8%;
+    --foreground: 45 100% 96%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 20 25% 12%;
+    --card-foreground: 45 100% 96%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 20 25% 12%;
+    --popover-foreground: 45 100% 96%;
 
-    --primary: 47 96% 53%;
-    --primary-foreground: 240 10% 3.9%;
+    --primary: 45 85% 65%;
+    --primary-foreground: 15 15% 8%;
 
-    --secondary: 240 4% 16%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 15% 18%;
+    --secondary-foreground: 45 100% 96%;
 
-    --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 64%;
+    --muted: 15 20% 15%;
+    --muted-foreground: 30 35% 70%;
 
-    --accent: 240 4% 16%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 355 75% 45%;
+    --accent-foreground: 45 100% 96%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 45 100% 96%;
 
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 47 96% 53%;
+    --border: 20 25% 18%;
+    --input: 20 25% 12%;
+    --ring: 45 85% 65%;
 
     --radius: 0.75rem;
 
-    /* Cinema-specific colors */
-    --cinema-gold: 47 96% 53%;
-    --cinema-purple: 260 100% 80%;
-    --cinema-blue: 220 100% 70%;
-    --cinema-dark: 240 10% 3.9%;
-    --cinema-darker: 240 20% 1%;
-    --seat-available: 240 5% 64%;
-    --seat-selected: 47 96% 53%;
-    --seat-occupied: 0 84% 60%;
+    /* Luxury-specific colors */
+    --luxury-gold: 45 85% 65%;
+    --luxury-gold-dark: 40 75% 55%;
+    --luxury-burgundy: 355 75% 45%;
+    --luxury-burgundy-dark: 350 85% 35%;
+    --luxury-cream: 45 100% 96%;
+    --luxury-charcoal: 15 15% 8%;
+    --luxury-charcoal-light: 20 25% 12%;
+    --luxury-bronze: 30 65% 55%;
+    --luxury-pearl: 45 50% 92%;
+    
+    --seat-available: 30 35% 70%;
+    --seat-selected: 45 85% 65%;
+    --seat-occupied: 355 75% 45%;
 
-    /* Gradients */
-    --gradient-cinema: linear-gradient(135deg, hsl(240 10% 3.9%), hsl(240 20% 1%));
-    --gradient-gold: linear-gradient(135deg, hsl(47 96% 53%), hsl(45 90% 60%));
-    --gradient-purple: linear-gradient(135deg, hsl(260 100% 80%), hsl(280 100% 70%));
+    /* Luxury Gradients */
+    --gradient-luxury: linear-gradient(135deg, hsl(15 15% 8%), hsl(20 25% 12%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 85% 65%), hsl(40 75% 55%));
+    --gradient-burgundy: linear-gradient(135deg, hsl(355 75% 45%), hsl(350 85% 35%));
+    --gradient-elegant: linear-gradient(145deg, hsl(20 25% 12%), hsl(15 15% 8%), hsl(355 75% 45% / 0.1));
 
-    /* Shadows */
-    --shadow-cinema: 0 25px 50px -12px hsl(240 20% 1% / 0.8);
-    --shadow-gold: 0 10px 30px -10px hsl(47 96% 53% / 0.3);
+    /* Luxury Shadows */
+    --shadow-luxury: 0 25px 50px -12px hsl(15 15% 8% / 0.9);
+    --shadow-gold: 0 15px 35px -8px hsl(45 85% 65% / 0.4);
+    --shadow-burgundy: 0 10px 25px -5px hsl(355 75% 45% / 0.3);
 
     --sidebar-background: 0 0% 98%;
 

@@ -1,15 +1,21 @@
-import { Star, Clock, MapPin } from 'lucide-react';
+import { useState } from 'react';
+import { Star, Clock, MapPin, MessageSquare } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { MovieReviews } from './MovieReviews';
 import { Movie } from '@/lib/movieData';
 
 interface MovieCardProps {
   movie: Movie;
   onSelectMovie: (movie: Movie) => void;
+  userEmail?: string;
+  isLoggedIn?: boolean;
 }
 
-export const MovieCard = ({ movie, onSelectMovie }: MovieCardProps) => {
+export const MovieCard = ({ movie, onSelectMovie, userEmail, isLoggedIn = false }: MovieCardProps) => {
+  const [showReviews, setShowReviews] = useState(false);
   return (
     <Card className="group relative overflow-hidden bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-cinema hover:-translate-y-1">
       <div className="relative">
@@ -61,12 +67,33 @@ export const MovieCard = ({ movie, onSelectMovie }: MovieCardProps) => {
           </div>
         </div>
         
-        <Button 
-          onClick={() => onSelectMovie(movie)}
-          className="w-full bg-gradient-gold hover:shadow-gold transition-all duration-300 text-cinema-dark font-semibold"
-        >
-          Book Tickets
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            onClick={() => onSelectMovie(movie)}
+            className="flex-1 bg-gradient-gold hover:shadow-gold transition-all duration-300 text-luxury-charcoal font-semibold"
+          >
+            Book Tickets
+          </Button>
+          
+          <Dialog open={showReviews} onOpenChange={setShowReviews}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon" className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-luxury-charcoal">
+                <MessageSquare className="w-4 h-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Movie Reviews</DialogTitle>
+              </DialogHeader>
+              <MovieReviews 
+                movieId={movie.id}
+                movieTitle={movie.title}
+                userEmail={userEmail}
+                isLoggedIn={isLoggedIn}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
       </CardContent>
     </Card>
   );
